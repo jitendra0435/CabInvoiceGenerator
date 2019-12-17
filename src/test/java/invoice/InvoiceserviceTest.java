@@ -69,4 +69,24 @@ public class InvoiceserviceTest {
         Assert.assertEquals(expectedInvoiceSummary,invoiceSummary);
 
     }
+
+    @Test
+    public void givenMEthodForMultipleUser_forPrimium_shoulReturnInvoiceSummary()
+    {
+        String userId="a@b.com";
+        String userId2="x@y.com";
+        Ride[] rides={ new Ride(2.0,5),
+                new Ride(1.0,1)};
+        Ride[] rides1={ new Ride(3.0,5),
+                new Ride(1.0,1)};
+        InvoiceService invoiceService=new InvoiceService(InvoiceService.RideCategories.PREMIUM_RIDES);
+        invoiceService.addRides(userId,rides);
+        InvoiceSummary invoiceSummary=invoiceService.getInvoiceSummary(userId);
+        invoiceService.addRides(userId2,rides1);
+        InvoiceSummary invoiceSummary1=invoiceService.getInvoiceSummary(userId2);
+        InvoiceSummary expectedInvoiceSummary=new InvoiceSummary(2,60.0);
+        InvoiceSummary expectedInvoiceSummary1=new InvoiceSummary(2,75.0);
+        Assert.assertEquals(expectedInvoiceSummary,invoiceSummary);
+        Assert.assertEquals(expectedInvoiceSummary1,invoiceSummary1);
+    }
 }
