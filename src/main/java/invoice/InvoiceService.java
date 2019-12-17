@@ -2,39 +2,33 @@ package invoice;
 
 public class InvoiceService {
 
-    private static final int COST_PER_TIME=1;
-    private static final double MIN_COST_PER_KILOMETER = 10;
-    private static final double MINIMUM_FARE = 5;
-
-    private static final int COST_PER_TIME_FOR_PRIMIUM=2;
-    private static final double MIN_COST_PER_KILOMETER_FOR_PRIMIUM = 15;
-    private static final double PRIMIUM_FARE=20;
+    private static int COST_PER_TIME;
+    private static double MIN_COST_PER_KILOMETER ;
+    private static double MINIMUM_FARE;
     RideCategories categories=null;
-    RideRepository rideRepository=null;
+    RideRepository rideRepository;
 
     enum RideCategories{
         NORMAL_RIDES,PREMIUM_RIDES
     }
 
     public InvoiceService(RideCategories categories) {
-        this.categories=categories;
+        this.rideRepository=new RideRepository();
+        if(categories.equals(RideCategories.NORMAL_RIDES)){
+            COST_PER_TIME=1;
+            MIN_COST_PER_KILOMETER=10;
+            MINIMUM_FARE=5;
+        }
+        else  if(categories.equals(RideCategories.PREMIUM_RIDES)){
+            COST_PER_TIME=2;
+            MIN_COST_PER_KILOMETER = 15;
+            MINIMUM_FARE=20;
+        }
     }
 
     public double calculateFair(double distance, int time) {
-        double totalFare=0.0;
-      if(this.categories.equals(RideCategories.NORMAL_RIDES)){
-          totalFare=distance*MIN_COST_PER_KILOMETER + time*COST_PER_TIME;
-          return totalFare;
-      }
-       else
-           totalFare = distance * MIN_COST_PER_KILOMETER_FOR_PRIMIUM + time * COST_PER_TIME_FOR_PRIMIUM;
-       return  totalFare;
-
-    }
-
-    public InvoiceService()
-    {
-        this.rideRepository=new RideRepository();
+         double totalFare = distance*MIN_COST_PER_KILOMETER + time*COST_PER_TIME;
+          return Math.max(totalFare,MINIMUM_FARE);
     }
 
     public InvoiceSummary calculateFare(Ride[] rides)

@@ -3,8 +3,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class InvoiceserviceTest {
+
     @Test
-    public void givenDistanceAndTime_shouldRetrunTotalfare()
+    public void givenDistanceAndTime_forNormalRide_shouldRetrunTotalfare()
     {
         InvoiceService invoiceGenerator=new InvoiceService(InvoiceService.RideCategories.NORMAL_RIDES);
         double distance=2.0;
@@ -38,7 +39,7 @@ public class InvoiceserviceTest {
         String userid="a@b.com";
         Ride[] rides={ new Ride(2.0,5),
                 new Ride(1.0,1)};
-        InvoiceService invoiceService=new InvoiceService();
+        InvoiceService invoiceService=new InvoiceService(InvoiceService.RideCategories.NORMAL_RIDES);
         invoiceService.addRides(userid,rides);
         InvoiceSummary invoiceSummary=invoiceService.getInvoiceSummary(userid);
         InvoiceSummary expectedInvoiceSummary=new InvoiceSummary(2,36.0);
@@ -46,22 +47,8 @@ public class InvoiceserviceTest {
 
     }
 
-//    @Test
-//    public void givenMethodFor_returningNoOfRides_forParticularUserId() {
-//        String userid="a@b.com";
-//        Ride[] rides={ new Ride(2.0,5),
-//                new Ride(1.0,1)};
-//        RideRepository rideRepository=new RideRepository();
-//        InvoiceService invoiceService=new InvoiceService();
-//        invoiceService.addRides(userid,rides);
-//        Ride[] noOfRide =rideRepository.getRide(userid);
-//        Assert.assertEquals(2,noOfRide.length);
-//
-//    }
-//
-
     @Test
-    public void givenDistanceAndTime_sphouldRetrunTotalfare()
+    public void givenDistanceAndTime_forPremiumUser_shouldRetrunTotalfare()
     {
         InvoiceService invoiceGenerator=new InvoiceService(InvoiceService.RideCategories.PREMIUM_RIDES);
         double distance=2.0;
@@ -70,4 +57,16 @@ public class InvoiceserviceTest {
         Assert.assertEquals(40.0,result,0.0);
     }
 
+    @Test
+    public void givenUserIdRides_forPrimiumUser_shouldReturnInvoiceSummary() {
+        String userid="a@b.com";
+        Ride[] rides={ new Ride(2.0,5),
+                new Ride(1.0,1)};
+        InvoiceService invoiceService=new InvoiceService(InvoiceService.RideCategories.PREMIUM_RIDES);
+        invoiceService.addRides(userid,rides);
+        InvoiceSummary invoiceSummary=invoiceService.getInvoiceSummary(userid);
+        InvoiceSummary expectedInvoiceSummary=new InvoiceSummary(2,60.0);
+        Assert.assertEquals(expectedInvoiceSummary,invoiceSummary);
+
+    }
 }

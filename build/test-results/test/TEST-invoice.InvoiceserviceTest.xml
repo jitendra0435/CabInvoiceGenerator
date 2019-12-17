@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="invoice.InvoiceserviceTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2019-12-16T14:33:25" hostname="admin1-desktop" time="77.169">
+<testsuite name="invoice.InvoiceserviceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-12-17T05:29:08" hostname="admin1-desktop" time="0.003">
   <properties/>
-  <testcase name="givenUserIdRides_shouldReturnInvoiceSummary" classname="invoice.InvoiceserviceTest" time="77.169">
-    <skipped/>
-  </testcase>
+  <testcase name="givenUserIdRides_forPrimiumUser_shouldReturnInvoiceSummary" classname="invoice.InvoiceserviceTest" time="0.003"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
